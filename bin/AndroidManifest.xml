@@ -26,6 +26,10 @@
             android:name="edu.msu.myturns.stackergame.GameActivity"
             android:label="@string/title_activity_game" >
         </activity>
+        <activity
+            android:name="edu.msu.myturns.stackergame.ScoreActivity"
+            android:label="@string/title_activity_score" >
+        </activity>
     </application>
 
 </manifest>

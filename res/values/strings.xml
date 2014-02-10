@@ -8,5 +8,6 @@
     <string name="start">Start</string>
     <string name="tutorial">Tutorial</string>
     <string name="stacker_description">Stacker Picture</string>
+    <string name="title_activity_score">Score</string>
 
 </resources>
