@@ -30,6 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="30dp"
+            android:onClick="onStartGame"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
             android:text="@string/start" />

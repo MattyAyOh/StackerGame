@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">StackerGame</string>
+    <string name="app_name">Stacker</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_game">Game</string>
@@ -9,5 +9,8 @@
     <string name="tutorial">Tutorial</string>
     <string name="stacker_description">Stacker Picture</string>
     <string name="title_activity_score">Score</string>
+    <string name="temporaryScoreButton">Temporary End Game</string>
+    <string name="mainMenu">Main Menu</string>
+    <string name="finalScore">Final Score: 5-0</string>
 
 </resources>
