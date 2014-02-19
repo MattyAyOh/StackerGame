@@ -30,5 +30,24 @@ public class Brick {
 		canvas.drawBitmap(brickImage, 0, 0, null);
 		canvas.restore();
 	}
+	
+    public boolean hit(float testX, float testY, int stackSize, float scaleFactor) {
+        // Make relative to the location and size to the piece size
+        int pX = (int)((testX - x) * stackSize / scaleFactor) + brickImage.getWidth() / 2;
+        int pY = (int)((testY - y) * stackSize / scaleFactor) + brickImage.getHeight() / 2;
+        
+        if(pX < 0 || pX >= brickImage.getWidth() ||
+           pY < 0 || pY >= brickImage.getHeight()) {
+            return false;
+        }
+        
+        // We are within the rectangle of the piece.
+        // Are we touching actual picture?
+        return (brickImage.getPixel(pX, pY) & 0xff000000) != 0;
+    }
+    
+    public void move(float dx) {
+        x += dx;
+    }
 
 }

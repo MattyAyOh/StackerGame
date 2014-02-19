@@ -1,0 +1,36 @@
+
+Project 1 Submission
+
+Group Name:   My Turns
+
+When you have completed the project, complete the following form and include it with your project. Include this file as a text file in the folder with your project when you turn it in. 
+
+Names of all classes responsible for storing the stack of bricks:
+StackView - The view that will display the stack
+Stack - The data structure, essentially a canvas to display the bricks.  Contains a array list that holds the current bricks in play
+Brick - The building block for the stack
+
+
+Member 1: Matt Ao
+
+Responsiblity: Activities, help, and game sequencing.
+
+
+
+Member 2: Matt Smania
+ 
+Responsiblity: The brick view control - placing bricks and scrolling.
+
+
+
+Member 3: Nick Vogt
+
+Responsiblity: Brick stability testing and falling behavior.
+
+
+
+Member 4 (if applicable): 
+
+Responsiblity:
+
+

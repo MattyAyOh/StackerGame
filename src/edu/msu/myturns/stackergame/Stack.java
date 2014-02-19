@@ -50,9 +50,7 @@ public class Stack {
 //		outlinePaint.setColor(0xff008000);
 //		outlinePaint.setStyle(Paint.Style.STROKE);
 		
-		bricks.add(new Brick(context, R.drawable.brick_blue, 1, 0.259f, 0.238f));
-		bricks.add(new Brick(context, R.drawable.brick_green1, 3, 0.0f, 0.0f));
-        bricks.add(new Brick(context, R.drawable.brick_red1, 5, 0.666f, 0.158f));
+		bricks.add(new Brick(context, R.drawable.brick_blue, 1, 0.5f, 1.0f));
 
         sView=view;
 	}
@@ -86,121 +84,60 @@ public class Stack {
 		}
 	}
 	
-//	
-//    public boolean onTouchEvent(View view, MotionEvent event) { 
-//        float relX = (event.getX() - marginX) / stackSize;
-//        float relY = (event.getY() - marginY) / stackSize;
-//        switch (event.getActionMasked()) {
-//        
-//        case MotionEvent.ACTION_DOWN:
-////            Log.i("onTouchEvent", "ACTION_DOWN");
-//        	return onTouched(relX, relY);
-//				
-//        case MotionEvent.ACTION_UP:
-//        	return onReleased(view, relX, relY);
-//        	
-//        case MotionEvent.ACTION_CANCEL:
-////            Log.i("onTouchEvent", "ACTION_UP");
-//            if(dragging != null) {
-//                dragging = null;
-//                return true;
-//            }
-//
-//        case MotionEvent.ACTION_MOVE:
-////        	Log.i("onTouchEvent",  "ACTION_MOVE: " + event.getX() + "," + event.getY());
-//            // If we are dragging, move the piece and force a redraw
-//            if(dragging != null) {
-//                dragging.move(relX - lastRelX, relY - lastRelY);
-//                lastRelX = relX;
-//                lastRelY = relY;
-//                done = false;
-//                view.invalidate();
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+	
+    public boolean onTouchEvent(View view, MotionEvent event) { 
+        float relX = (event.getX() - marginX) / stackSize;
+        float relY = (event.getY() - marginY) / stackSize;
+        switch (event.getActionMasked()) {
+        
+        case MotionEvent.ACTION_DOWN:
+        	return onTouched(relX, relY);
+				
+        case MotionEvent.ACTION_UP:
+        	return onReleased(view, relX, relY);
+        	
+        case MotionEvent.ACTION_CANCEL:
+            if(dragging != null) {
+                dragging = null;
+                return true;
+            }
+
+        case MotionEvent.ACTION_MOVE:
+            if(dragging != null) {
+                dragging.move(relX - lastRelX);
+                lastRelX = relX;
+                done = false;
+                view.invalidate();
+                return true;
+            }
+        }
+        return false;
+    }
     
-//
-//    private boolean onTouched(float x, float y) {
-//        
-//        // Check each piece to see if it has been hit
-//        // We do this in reverse order so we find the pieces in front
-//    	
-//        for(int p=pieces.size()-1; p>=0;  p--) {
-//            if(pieces.get(p).hit(x, y, puzzleSize, scaleFactor)) {
-//                // We hit a piece!
-//            	dragging = pieces.get(p);
-//            	
-//            	pieces.remove(dragging);
-//            	pieces.add(pieces.size(), dragging);
-//            	
-//            	lastRelX = x;
-//            	lastRelY = y;
-//                return true;
-//            }
-//        }
-//        
-//        return false;
-//    }
-//    
-//
-//    private boolean onReleased(View view, float x, float y) {
-//
-//        if(dragging != null) {
-//            if(dragging.maybeSnap()) {
-//                // We have snapped into place
-//                view.invalidate();
-//                
-//                if(isDone()) {
-////                	Log.i("Puzzle", "Puzzle complete");
-//                    // The puzzle is done
-//                    // Instantiate a dialog box builder
-//                	view.invalidate();
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-//                    ShuffleListener listener = new ShuffleListener();
-//                    // Parameterize the builder
-//                    builder.setTitle(R.string.hurrah);
-//                    builder.setMessage(R.string.completed_puzzle);
-//                    builder.setPositiveButton(android.R.string.ok, null);
-//                    builder.setNegativeButton(R.string.shuffle, listener);
-//                    
-//                    // Create the dialog box and show it
-//                    AlertDialog alertDialog = builder.create();
-//                    alertDialog.show();
-//                    
-//                }
-//                pieces.remove(dragging);
-//                pieces.add(0, dragging);
-//            }
-//            dragging = null;
-//            return true;
-//        }
-//        return false;
-//    }
-//	private class ShuffleListener implements DialogInterface.OnClickListener {
-//
-//		@Override
-//		public void onClick(DialogInterface dialog, int which) {
-//			shuffle();
-//			pView.invalidate();
-//		}
-//		
-//	}
-//    /**
-//     * Determine if the puzzle is done!
-//     * @return true if puzzle is done
-//     */
-//    public boolean isDone() {
-//        for(PuzzlePiece piece : pieces) {
-//            if(!piece.isSnapped()) {
-//            	done = false;
-//                return false;
-//            }
-//        }
-//        done = true;
-//        return true;
-//    }
+
+    private boolean onTouched(float x, float y) {
+        
+        for(int b=bricks.size()-1; b>=0;  b--) {
+            if(bricks.get(b).hit(x, y, stackSize, scaleFactor)) {
+            	dragging = bricks.get(b);
+
+            	lastRelX = x;
+            	lastRelY = y;
+                return true;
+            }
+        }
+        return false;
+    }
+    
+
+    private boolean onReleased(View view, float x, float y) {
+        if(dragging != null) {       
+            dragging = null;
+            return true;
+        }
+        return false;
+    }
+
 
 //
 //	public void saveInstanceState(Bundle bundle) {
@@ -244,6 +181,6 @@ public class Stack {
 //			piece.setY(locations[i*2+1]);
 //		}
 //	}
-//	
+	
 	
 }

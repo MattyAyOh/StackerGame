@@ -47,7 +47,7 @@
                 android:layout_marginTop="40dp"
 	            android:paddingLeft="40dp"
 	            android:paddingRight="40dp"
-                android:onClick="onStartPuzzle"
+                android:onClick="onStartGame"
                 android:text="@string/start" />
 
         </FrameLayout>

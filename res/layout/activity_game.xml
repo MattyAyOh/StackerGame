@@ -15,6 +15,12 @@
     <edu.msu.myturns.stackergame.StackView
         android:id="@+id/stackView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ScrollView>
 
 </LinearLayout>

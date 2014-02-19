@@ -9,10 +9,10 @@ import android.view.View;
 
 public class StackView extends View {
 
-//	@Override
-//	public boolean onTouchEvent(MotionEvent event) {
-//        return stack.onTouchEvent(this, event);
-//	}
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+        return stack.onTouchEvent(this, event);
+	}
 
 	private Stack stack;
     public Stack getStack() {

@@ -11,6 +11,6 @@
     <string name="title_activity_score">Score</string>
     <string name="temporaryScoreButton">Temporary End Game</string>
     <string name="mainMenu">Main Menu</string>
-    <string name="finalScore">Final Score: 5-0</string>
+    <string name="finalScore">Final Score: 5:0</string>
 
 </resources>
