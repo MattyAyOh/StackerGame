@@ -71,6 +71,17 @@ public class Brick {
     	else
     		return false;
     }
+    public boolean isUnderCenter(float testX, int stackSize, float scaleFactor) {
+    	
+		    // Make relative to the location and size to the piece size
+		    int pX = (int)((testX - x) * stackSize / scaleFactor) + brickImage.getWidth() / 2;
+		    
+		    if(pX < 0 || pX >= brickImage.getWidth())
+		        return false;
+		    
+		    return true;
+    	
+    }
     
     public void move(float dx) {
         x += dx;

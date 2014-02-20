@@ -156,12 +156,12 @@ public class Stack {
     		lastStable = i;
     		float sum = 0;
     		float totalMass = 0;
-    		for (Brick b : bricks.subList(i,bricks.size())){
+    		for (Brick b : bricks.subList(i+1,bricks.size())){
     			sum += b.getMass() * b.getX();
     			totalMass += b.getMass();
     		}
     		float center = sum / totalMass;
-    		if (!base.hit(center, base.getY(), stackSize, scaleFactor)){
+    		if (!base.isUnderCenter(center, stackSize, scaleFactor)){
     			unstable = true;
     			return;
     		}

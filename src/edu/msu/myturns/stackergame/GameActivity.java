@@ -32,6 +32,8 @@ public class GameActivity extends Activity {
     	
     	//Check to see if fallen, track score, after fallen reset stackView
     	stack.physicsCheck(); //calculate physics
+    	boolean unstable = stack.isUnstable();
+    	int lastStable = stack.getLastStable();
     	if (stack.isUnstable()) 
     	{}//update score, go to score activity when limit is reached
     	else
