@@ -15,6 +15,7 @@ public class GameActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
+		setTitle(R.string.game);
 		setContentView(R.layout.activity_game);
 		stackView = (StackView)this.findViewById(R.id.stackView);
 		

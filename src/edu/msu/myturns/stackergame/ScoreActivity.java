@@ -11,6 +11,7 @@ public class ScoreActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTitle(R.string.score);
 		setContentView(R.layout.activity_score);
 	}
 

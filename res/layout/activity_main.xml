@@ -42,6 +42,7 @@
             android:layout_toRightOf="@id/startButton"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
+            android:onClick="onHowTo"
             android:text="@string/tutorial" />
 
     </RelativeLayout>

@@ -66,7 +66,7 @@
 	            android:layout_marginBottom="40dp"
 				android:paddingLeft="30dp"
 				android:paddingRight="30dp"
-	            android:onClick="onStartPuzzle"
+	            android:onClick="onHowTo"
 	            android:text="@string/tutorial" />
 
         </FrameLayout>
