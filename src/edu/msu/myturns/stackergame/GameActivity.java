@@ -27,9 +27,16 @@ public class GameActivity extends Activity {
 	
     public void onSelectWeight(View view) {
     	int weight = Integer.parseInt((String)view.getTag()); 
-
-    	stackView.getStack().bricks.get(stackView.getStack().bricks.size()-1).setMass(weight);
+    	Stack stack = stackView.getStack();
+    	stack.bricks.get(stack.bricks.size()-1).setMass(weight);
+    	
     	//Check to see if fallen, track score, after fallen reset stackView
+    	stack.physicsCheck(); //calculate physics
+    	if (stack.isUnstable()) 
+    	{}//update score, go to score activity when limit is reached
+    	else
+    	{}//continue playing
+    	
     	PlayerOneScore++;
     	PlayerTwoScore++;
     	PlayerOneScore = PlayerTwoScore;

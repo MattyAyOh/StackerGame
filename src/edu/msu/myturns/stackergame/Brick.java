@@ -32,6 +32,17 @@ public class Brick {
 		return brickImage.getHeight();
 	}
 	
+	public float getX() {
+		return x;
+	}
+	
+	public float getY() {
+		return y;
+	}
+	
+	public int getMass() {
+		return mass;
+	}
 	public void draw(Canvas canvas, int marginX, int marginY, int stackSize, float scaleFactor) {
 		canvas.save();
 		canvas.translate(marginX + x * stackSize, marginY + y * stackSize);

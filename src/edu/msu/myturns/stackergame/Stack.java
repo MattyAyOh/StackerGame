@@ -43,9 +43,17 @@ public class Stack {
     private View sView;
     
     private boolean done;
+    private boolean unstable = false;
+    private int lastStable;
     
 
+    public boolean isUnstable(){
+    	return unstable;
+    }
     
+    public int getLastStable(){
+    	return lastStable;
+    }
 	public Stack(View view, Context context) {
 //		fillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 //		fillPaint.setColor(0xffcccccc);
@@ -140,6 +148,22 @@ public class Stack {
             return true;
         }
         return false;
+    }
+    
+    public void physicsCheck(){
+    	for (int i = 0; i < bricks.size(); i++){
+    		Brick base = bricks.get(i);
+    		lastStable = i;
+    		float sum = 0;
+    		for (Brick b : bricks.subList(i,bricks.size())){
+    			sum += b.getMass() * b.getX();
+    		}
+    		float center = sum / (bricks.size() - i - 1);
+    		if (!base.hit(center, base.getY(), stackSize, scaleFactor)){
+    			unstable = true;
+    			return;
+    		}
+    	}
     }
 
 
