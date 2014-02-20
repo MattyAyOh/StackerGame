@@ -3,11 +3,14 @@ package edu.msu.myturns.stackergame;
 import android.os.Bundle;
 import android.view.View;
 import android.app.Activity;
-import android.content.Intent;
 
 public class GameActivity extends Activity {
 	
 	private StackView stackView;
+	
+	private int PlayerOneScore;
+	private int PlayerTwoScore;
+	private boolean PlayerOneTurn;
 	
 	@Override
 	protected void onCreate(Bundle bundle) {
@@ -22,9 +25,26 @@ public class GameActivity extends Activity {
 
 	}
 	
-    public void onTempScore(View view) {
-		Intent intent = new Intent(this, ScoreActivity.class);
-		startActivity(intent);
+    public void onSelectWeight(View view) {
+    	int weight = Integer.parseInt((String)view.getTag()); 
+
+    	stackView.getStack().bricks.get(stackView.getStack().bricks.size()-1).setMass(weight);
+    	//Check to see if fallen, track score, after fallen reset stackView
+    	PlayerOneScore++;
+    	PlayerTwoScore++;
+    	PlayerOneScore = PlayerTwoScore;
+    	PlayerTwoScore = PlayerOneScore;
+    	
+    	if(PlayerOneTurn)
+    		stackView.getStack().bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 1.0f));
+    	else
+    		stackView.getStack().bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 1.0f));
+    	
+    	//Adjust Y offset
+    	
+    	stackView.invalidate();
+    	PlayerOneTurn = !PlayerOneTurn;
+    	
 	}
 
 

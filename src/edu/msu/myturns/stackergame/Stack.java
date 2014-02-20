@@ -16,6 +16,7 @@ import android.view.View;
 public class Stack {
 
 	final static float SCALE_IN_VIEW = 0.9f;
+	private int yOffset;
 	
 	private final static String LOCATIONS = "Puzzle.locations";
 	private final static String IDS = "Puzzle.ids";
@@ -43,6 +44,8 @@ public class Stack {
     
     private boolean done;
     
+
+    
 	public Stack(View view, Context context) {
 //		fillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 //		fillPaint.setColor(0xffcccccc);
@@ -51,7 +54,7 @@ public class Stack {
 //		outlinePaint.setStyle(Paint.Style.STROKE);
 		
 		bricks.add(new Brick(context, R.drawable.brick_blue, 1, 0.5f, 1.0f));
-
+		yOffset=0;
         sView=view;
 	}
     
@@ -60,9 +63,9 @@ public class Stack {
 		int hit = canvas.getHeight();
 		
 		// Determine the minimum of the two dimensions
-		int minDim = wid < hit ? wid : hit;
+//		int minDim = wid < hit ? wid : hit;
 		
-		stackSize = (int)(minDim * SCALE_IN_VIEW);
+		stackSize = (int)(hit * SCALE_IN_VIEW);
 		
 		// Compute the margins so we center the puzzle
 		marginX = (wid - stackSize) / 2;
@@ -72,15 +75,16 @@ public class Stack {
 //		canvas.drawRect(marginX, marginY, marginX + stackSize, marginY + stackSize, fillPaint);
 //		canvas.drawRect(marginX, marginY, marginX + stackSize, marginY + stackSize, outlinePaint);
 		
-//		scaleFactor = (float)stackSize  / (float)puzzleComplete.getWidth();
-		scaleFactor = .5f;
+		scaleFactor = (float)stackSize  / wid;
 		canvas.save();
 		canvas.translate(marginX, marginY);
 		canvas.scale(scaleFactor, scaleFactor);
 		canvas.restore();
 			
+		yOffset = 0;
 		for(Brick brick : bricks) {
-			brick.draw(canvas, marginX, marginY, stackSize, scaleFactor);
+			brick.draw(canvas, marginX, marginY-yOffset, stackSize, scaleFactor);
+			yOffset += (brick.getHeight()*scaleFactor);
 		}
 	}
 	

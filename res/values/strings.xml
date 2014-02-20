@@ -9,7 +9,10 @@
     <string name="tutorial">Tutorial</string>
     <string name="stacker_description">Stacker Picture</string>
     <string name="title_activity_score">Score</string>
-    <string name="temporaryScoreButton">Temporary End Game</string>
+    <string name="onekg">1kg</string>
+    <string name="twokg">2kg</string>
+    <string name="fivekg">5kg</string>
+    <string name="tenkg">10kg</string>
     <string name="mainMenu">Main Menu</string>
     <string name="finalScore">Final Score: 5:0</string>
 
