@@ -30,7 +30,8 @@ public class Stack {
 	public ArrayList<Brick> bricks = new ArrayList<Brick>();
 	
     private int stackSize;
-    
+    int animationStep = 0;
+    private static final int maxSteps = 50;
     private float scaleFactor;
     
     private int marginX;
@@ -47,6 +48,7 @@ public class Stack {
     private boolean done;
     private boolean unstable = false;
     private int lastStable;
+    private int fallDirection;
     
 
     public boolean isUnstable(){
@@ -96,12 +98,36 @@ public class Stack {
 		canvas.scale(scaleFactor, scaleFactor);
 		canvas.restore();
 			
-		yOffset = 0;
-		for(Brick brick : bricks) {
-			brick.draw(canvas, marginX, marginY, stackSize, scaleFactor, yOffset);
+		Brick base = bricks.get(lastStable);
+		yOffset = base.getHeight()*scaleFactor;
+		int i = 0;
+		if (unstable)
+		{
+			animationStep++;
+			for(Brick brick : bricks.subList(0, lastStable+1)) {
+				brick.draw(canvas, marginX, marginY, i * yOffset, stackSize, scaleFactor,
+						false, base.getX(), base.getY(), lastStable * yOffset, fallDirection
+						,animationStep, maxSteps);
+				i++;
+			}
+			for(Brick brick : bricks.subList(lastStable+1, bricks.size()))
+			{
+				brick.draw(canvas, marginX, marginY, i * yOffset, stackSize, scaleFactor,
+						true, base.getX(), base.getY(), lastStable * yOffset, fallDirection
+						,animationStep, maxSteps);
+				i++;
+			}
+			if (animationStep < 50)
+				sView.invalidate();
 		}
+		else
+			for(Brick brick : bricks) {
+				brick.draw(canvas, marginX, marginY, i * yOffset, stackSize, scaleFactor,
+						false, base.getX(), base.getY(), lastStable * yOffset, fallDirection
+						,animationStep, maxSteps);
+				i++;
+			}	
 	}
-	
 	
     public boolean onTouchEvent(View view, MotionEvent event) { 
         float relX = (event.getX() - marginX) / stackSize;
@@ -176,6 +202,7 @@ public class Stack {
     		float center = sum / totalMass;
     		if (!base.isUnderCenter(center, stackSize, scaleFactor)){
     			unstable = true;
+    			fallDirection = base.fallDirection(center, stackSize, scaleFactor);
     			return;
     		}
     	}
