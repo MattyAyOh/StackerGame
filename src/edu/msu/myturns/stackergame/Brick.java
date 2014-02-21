@@ -43,13 +43,31 @@ public class Brick {
 	public int getMass() {
 		return mass;
 	}
-	public void draw(Canvas canvas, int marginX, int marginY, int stackSize, float scaleFactor) {
-		canvas.save();
-		canvas.translate(marginX + x * stackSize, marginY + y * stackSize);
-		canvas.scale(scaleFactor, scaleFactor);
-		canvas.translate(-brickImage.getWidth() / 2, -brickImage.getHeight() / 2);
-		canvas.drawBitmap(brickImage, 0, 0, null);
-		canvas.restore();
+	public void draw(Canvas canvas, int marginX, int marginY, float offset, int stackSize, float scaleFactor,
+			boolean falling, float baseX, float baseY, float baseOffset, int fallDirection,
+			int animationStep, int maxSteps) {
+		if (falling)
+		{
+			canvas.save();
+			canvas.translate(marginX + x * stackSize, marginY + y * stackSize - offset);
+			
+			canvas.translate((x - baseX), (offset - baseOffset));
+			canvas.rotate(60 * fallDirection * Math.min(animationStep, maxSteps)/maxSteps);
+			canvas.translate((baseX - x), (baseOffset - offset));
+			canvas.scale(scaleFactor, scaleFactor);
+			canvas.translate(-brickImage.getWidth() / 2, -brickImage.getHeight() / 2);
+			canvas.drawBitmap(brickImage, 0, 0, null);
+			canvas.restore();
+		}
+		else
+		{
+			canvas.save();
+			canvas.translate(marginX + x * stackSize, marginY + y * stackSize - offset);
+			canvas.scale(scaleFactor, scaleFactor);
+			canvas.translate(-brickImage.getWidth() / 2, -brickImage.getHeight() / 2);
+			canvas.drawBitmap(brickImage, 0, 0, null);
+			canvas.restore();
+		}
 	}
 	
     public boolean hit(float testX, float testY, int stackSize, float scaleFactor) {
@@ -83,6 +101,14 @@ public class Brick {
     	
     }
     
+    public int fallDirection(float testX, int stackSize, float scaleFactor){
+    	 int pX = (int)((testX - x) * stackSize / scaleFactor) + brickImage.getWidth() / 2;
+		    
+		    if(pX < 0)
+		    	return -1;
+		    else
+		    	return 1;
+    }
     public void move(float dx) {
         x += dx;
     }
