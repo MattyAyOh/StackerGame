@@ -1,11 +1,15 @@
 package edu.msu.myturns.stackergame;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
+import android.widget.EditText;
 
 public class MainActivity extends Activity {
 
@@ -17,6 +21,23 @@ public class MainActivity extends Activity {
 	}
 
     public void onStartGame(View view) {
+    	EditText playerOne = (EditText)findViewById(R.id.editText1);
+    	String oneName = playerOne.getText().toString();
+    	EditText playerTwo = (EditText)findViewById(R.id.editText2);
+    	String twoName = playerTwo.getText().toString();
+    	
+//    	String keyOne = "edu.msu.myturns.stackergame.pOne";
+//    	String keyTwo = "edu.msu.myturns.stackergame.pTwo";
+//    	prefs.edit().putString(keyOne, oneName);
+//    	prefs.edit().putString(keyTwo, twoName);
+    	
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putString("PlayerOne",oneName);
+		editor.putString("PlayerTwo",twoName);
+		editor.commit();
+		
+		
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
 	}

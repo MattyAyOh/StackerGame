@@ -1,8 +1,12 @@
 package edu.msu.myturns.stackergame;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.TextView;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 public class GameActivity extends Activity {
 	
@@ -10,7 +14,9 @@ public class GameActivity extends Activity {
 	
 	private int PlayerOneScore;
 	private int PlayerTwoScore;
-	private boolean PlayerOneTurn;
+	private String PlayerOneName;
+	private String PlayerTwoName;
+	private boolean PlayerTwoTurn;
 	
 	@Override
 	protected void onCreate(Bundle bundle) {
@@ -18,7 +24,9 @@ public class GameActivity extends Activity {
 		setTitle(R.string.game);
 		setContentView(R.layout.activity_game);
 		stackView = (StackView)this.findViewById(R.id.stackView);
-		
+
+    	loadNames();
+    	
 		if(bundle != null) {
 			// We have saved state
 //			stackView.loadInstanceState(bundle);
@@ -45,17 +53,37 @@ public class GameActivity extends Activity {
     	PlayerOneScore = PlayerTwoScore;
     	PlayerTwoScore = PlayerOneScore;
     	
-    	if(PlayerOneTurn)
-    		stackView.getStack().bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 1.0f));
+    	if(PlayerTwoTurn)
+    		stack.bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 1.0f, stack.GetStackNum()));
     	else
-    		stackView.getStack().bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 1.0f));
-    	
+    		stack.bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 1.0f, stack.GetStackNum()));
     	//Adjust Y offset
     	
     	stackView.invalidate();
-    	PlayerOneTurn = !PlayerOneTurn;
+    	PlayerTwoTurn = !PlayerTwoTurn;
+    	loadNames();
     	
 	}
 
+    protected void loadNames(){
+    	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    	PlayerOneName = preferences.getString("PlayerOne","") + "'s Turn";
+    	if(PlayerOneName.equalsIgnoreCase(""))
+    	{
+    		PlayerOneName = "Player 1's Turn";
+    	}
+    	
+    	PlayerTwoName = preferences.getString("PlayerTwo","") + "'s Turn";
+    	if(PlayerTwoName.equalsIgnoreCase(""))
+    	{
+    		PlayerTwoName = "Player 2's Turn";
+    	}
+    	  
+    	TextView playerTurn = (TextView) findViewById(R.id.playerTurn);
+    	if(PlayerTwoTurn)
+    		playerTurn.setText(this.PlayerTwoName);
+    	else
+    		playerTurn.setText(this.PlayerOneName);
+    }
 
 }

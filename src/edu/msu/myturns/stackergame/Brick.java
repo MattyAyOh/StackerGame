@@ -14,12 +14,14 @@ public class Brick {
 	private int mass = 0;
 	private boolean active;
 	private Stack stack;
+	private int num;
 	
-	public Brick(Context context, int id, int m, float x, float y) {
+	public Brick(Context context, int id, int m, float x, float y, int n) {
 		this.x = x;
 		this.y = y;
 		this.mass = m;
 		this.active = true;
+		this.num = n;
 		brickImage = BitmapFactory.decodeResource(context.getResources(), id);
 	}
 	
@@ -43,9 +45,9 @@ public class Brick {
 	public int getMass() {
 		return mass;
 	}
-	public void draw(Canvas canvas, int marginX, int marginY, int stackSize, float scaleFactor) {
+	public void draw(Canvas canvas, int marginX, int marginY, int stackSize, float scaleFactor, float yoffset) {
 		canvas.save();
-		canvas.translate(marginX + x * stackSize, marginY + y * stackSize);
+		canvas.translate(marginX + x * stackSize, marginY + y * stackSize - (num*brickImage.getHeight()*scaleFactor));
 		canvas.scale(scaleFactor, scaleFactor);
 		canvas.translate(-brickImage.getWidth() / 2, -brickImage.getHeight() / 2);
 		canvas.drawBitmap(brickImage, 0, 0, null);
@@ -57,7 +59,7 @@ public class Brick {
     	{
 		    // Make relative to the location and size to the piece size
 		    int pX = (int)((testX - x) * stackSize / scaleFactor) + brickImage.getWidth() / 2;
-		    int pY = (int)((testY - y) * stackSize / scaleFactor) + brickImage.getHeight() / 2;
+		    int pY = (int)(((testY - y ) * stackSize )/ scaleFactor + num*brickImage.getHeight()) + brickImage.getHeight() / 2  ;
 		    
 		    if(pX < 0 || pX >= brickImage.getWidth() ||
 		       pY < 0 || pY >= brickImage.getHeight()) {

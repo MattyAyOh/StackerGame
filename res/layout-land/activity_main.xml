@@ -34,42 +34,83 @@
         android:layout_toRightOf="@id/anchor"
         android:orientation="vertical" >
 
-        <FrameLayout
+        <TableRow
+            android:id="@+id/tableRow1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" >
+            android:layout_weight="1"
+            android:gravity="bottom|center_horizontal" >
+	
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/pOne" />
+	
+	        <EditText
+	            android:id="@+id/editText1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:ems="10"
+	            android:inputType="text" >
+	
+	            <requestFocus />
+	        </EditText>
+	
+	    </TableRow>
+	
+	    <TableRow
+	        android:id="@+id/tableRow2"
+	        android:layout_width="match_parent"
+	        android:layout_height="0dp"
+	        android:layout_marginTop="20dp"
+	        android:layout_weight="1"
+	        android:gravity="center_horizontal" >
+	
+	        <TextView
+	            android:id="@+id/textView2"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/pTwo" />
+	
+	        <EditText
+	            android:id="@+id/editText2"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:ems="10"
+	            android:inputType="text" />
+	
+	    </TableRow>
 
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal" >
+	        
             <Button
                 android:id="@+id/startButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="40dp"
-	            android:paddingLeft="40dp"
-	            android:paddingRight="40dp"
+                android:layout_marginRight="15dp"
                 android:onClick="onStartGame"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
                 android:text="@string/start" />
 
-        </FrameLayout>
+            <Button
+                android:id="@+id/tutorialButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="onHowTo"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:text="@string/tutorial" />
 
-        
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" >
-
-	        <Button
-	            android:id="@+id/tutorialButton"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_gravity="center"
-	            android:layout_marginBottom="40dp"
-				android:paddingLeft="30dp"
-				android:paddingRight="30dp"
-	            android:onClick="onHowTo"
-	            android:text="@string/tutorial" />
-
-        </FrameLayout>
+        </TableRow>
         
     </LinearLayout>
         

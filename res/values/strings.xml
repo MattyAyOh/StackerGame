@@ -13,9 +13,11 @@
     <string name="twokg">2kg</string>
     <string name="fivekg">5kg</string>
     <string name="tenkg">10kg</string>
-    <string name="mainMenu">Main Menu -=- My Turns -=-</string>
-    <string name="game">Stacker Game -=- My Turns -=-</string>
-    <string name="score">Final Score -=- My Turns -=-</string>
+    <string name="mainMenu">Main Menu -=- Team: My Turns -=-</string>
+    <string name="game">Stacker Game -=- Team: My Turns -=-</string>
+    <string name="score">Final Score -=- Team: My Turns -=-</string>
     <string name="finalScore">Final Score: 5:0</string>
+    <string name="pOne">Player 1:</string>
+    <string name="pTwo">Player 2:</string>
 
 </resources>

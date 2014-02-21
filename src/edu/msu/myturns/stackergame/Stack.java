@@ -16,13 +16,15 @@ import android.view.View;
 public class Stack {
 
 	final static float SCALE_IN_VIEW = 0.9f;
-	private int yOffset;
+	private float yOffset;
 	
 	private final static String LOCATIONS = "Puzzle.locations";
 	private final static String IDS = "Puzzle.ids";
 	
 	private Paint fillPaint;
 	private Paint outlinePaint;
+	
+	private int StackNum;
 	
 	
 	public ArrayList<Brick> bricks = new ArrayList<Brick>();
@@ -60,10 +62,15 @@ public class Stack {
 //		outlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 //		outlinePaint.setColor(0xff008000);
 //		outlinePaint.setStyle(Paint.Style.STROKE);
-		
-		bricks.add(new Brick(context, R.drawable.brick_blue, 1, 0.5f, 1.0f));
+		StackNum = 1;
+		bricks.add(new Brick(context, R.drawable.brick_blue, 1, 0.5f, 1.0f, this.StackNum));
 		yOffset=0;
         sView=view;
+	}
+	
+	//Gets and increases stack num
+	public int GetStackNum(){
+		return ++StackNum;
 	}
     
 	public void draw(Canvas canvas) {
@@ -85,14 +92,13 @@ public class Stack {
 		
 		scaleFactor = (float)stackSize  / wid;
 		canvas.save();
-		canvas.translate(marginX, marginY);
+		canvas.translate(marginX, marginY +yOffset );
 		canvas.scale(scaleFactor, scaleFactor);
 		canvas.restore();
 			
 		yOffset = 0;
 		for(Brick brick : bricks) {
-			brick.draw(canvas, marginX, marginY-yOffset, stackSize, scaleFactor);
-			yOffset += (brick.getHeight()*scaleFactor);
+			brick.draw(canvas, marginX, marginY, stackSize, scaleFactor, yOffset);
 		}
 	}
 	
@@ -122,6 +128,13 @@ public class Stack {
                 view.invalidate();
                 return true;
             }
+            else{
+            	yOffset = relY - lastRelY;
+            	lastRelY = relY;
+            	view.invalidate();
+            	return true;
+            }
+            
         }
         return false;
     }
