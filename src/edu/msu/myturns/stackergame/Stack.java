@@ -17,12 +17,7 @@ public class Stack {
 
 	final static float SCALE_IN_VIEW = 0.9f;
 	private float yOffset;
-	
-	private final static String LOCATIONS = "Puzzle.locations";
-	private final static String IDS = "Puzzle.ids";
-	
-	private Paint fillPaint;
-	private Paint outlinePaint;
+	private float yScroll;
 	
 	private int StackNum;
 	
@@ -58,15 +53,20 @@ public class Stack {
     public int getLastStable(){
     	return lastStable;
     }
+    
+    public float getYScroll(){
+    	return yScroll;
+    }
 	public Stack(View view, Context context) {
 //		fillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 //		fillPaint.setColor(0xffcccccc);
 //		outlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 //		outlinePaint.setColor(0xff008000);
 //		outlinePaint.setStyle(Paint.Style.STROKE);
-		StackNum = 1;
-		bricks.add(new Brick(context, R.drawable.brick_blue, 1, 0.5f, 1.0f, this.StackNum));
+		StackNum = 0;
+		bricks.add(new Brick(context, R.drawable.brick_blue, 1, 0.5f, 1.0f, StackNum));
 		yOffset=0;
+		yScroll = 0;
         sView=view;
 	}
 	
@@ -94,7 +94,7 @@ public class Stack {
 		
 		scaleFactor = (float)stackSize  / wid;
 		canvas.save();
-		canvas.translate(marginX, marginY +yOffset );
+		canvas.translate(marginX, marginY +yOffset);
 		canvas.scale(scaleFactor, scaleFactor);
 		canvas.restore();
 			
@@ -105,14 +105,14 @@ public class Stack {
 		{
 			animationStep++;
 			for(Brick brick : bricks.subList(0, lastStable+1)) {
-				brick.draw(canvas, marginX, marginY, i * yOffset, stackSize, scaleFactor,
+				brick.draw(canvas, marginX, marginY, i * yOffset + yScroll*scaleFactor, stackSize, scaleFactor,
 						false, base.getX(), base.getY(), lastStable * yOffset, fallDirection
 						,animationStep, maxSteps);
 				i++;
 			}
 			for(Brick brick : bricks.subList(lastStable+1, bricks.size()))
 			{
-				brick.draw(canvas, marginX, marginY, i * yOffset, stackSize, scaleFactor,
+				brick.draw(canvas, marginX, marginY, i * yOffset + yScroll*scaleFactor, stackSize, scaleFactor,
 						true, base.getX(), base.getY(), lastStable * yOffset, fallDirection
 						,animationStep, maxSteps);
 				i++;
@@ -122,7 +122,7 @@ public class Stack {
 		}
 		else
 			for(Brick brick : bricks) {
-				brick.draw(canvas, marginX, marginY, i * yOffset, stackSize, scaleFactor,
+				brick.draw(canvas, marginX, marginY, i * yOffset + yScroll*scaleFactor, stackSize, scaleFactor,
 						false, base.getX(), base.getY(), lastStable * yOffset, fallDirection
 						,animationStep, maxSteps);
 				i++;
@@ -135,7 +135,10 @@ public class Stack {
         switch (event.getActionMasked()) {
         
         case MotionEvent.ACTION_DOWN:
-        	return onTouched(relX, relY);
+        	onTouched(relX, relY);
+        	lastRelX = relX;
+        	lastRelY = relY;
+        	return true;
 				
         case MotionEvent.ACTION_UP:
         	return onReleased(view, relX, relY);
@@ -155,7 +158,10 @@ public class Stack {
                 return true;
             }
             else{
-            	yOffset = relY - lastRelY;
+            	yScroll += relY - lastRelY;
+            	for(Brick brick : bricks){
+            	brick.scroll(relY - lastRelY);
+            	}
             	lastRelY = relY;
             	view.invalidate();
             	return true;

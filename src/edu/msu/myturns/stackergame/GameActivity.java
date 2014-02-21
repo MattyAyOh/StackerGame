@@ -54,9 +54,9 @@ public class GameActivity extends Activity {
     	PlayerTwoScore = PlayerOneScore;
     	
     	if(PlayerTwoTurn)
-    		stack.bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 1.0f, stack.GetStackNum()));
+    		stack.bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 1.0f + stack.getYScroll(), stack.GetStackNum()));
     	else
-    		stack.bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 1.0f, stack.GetStackNum()));
+    		stack.bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 1.0f + stack.getYScroll(), stack.GetStackNum()));
     	//Adjust Y offset
     	
     	stackView.invalidate();

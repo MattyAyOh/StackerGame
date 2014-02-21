@@ -115,5 +115,8 @@ public class Brick {
     public void move(float dx) {
         x += dx;
     }
-
+    
+    public void scroll(float dy){
+    	y+= dy;
+    }
 }
