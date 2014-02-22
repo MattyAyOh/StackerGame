@@ -17,8 +17,8 @@ public class Stack {
 	private final static String LOCATIONS = "Stack.locations";
 	private final static String IDS = "Stack.ids";
 	private final static String INFO = "Stack.info";	
+	private final static String OFFSET = "Stack.offset";	
 
-	private int StackNum;
 	public ArrayList<Brick> bricks = new ArrayList<Brick>();
 	
     private int stackSize;
@@ -60,21 +60,16 @@ public class Stack {
 //		outlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 //		outlinePaint.setColor(0xff008000);
 //		outlinePaint.setStyle(Paint.Style.STROKE);
-		StackNum = 0;
-		bricks.add(new Brick(c, R.drawable.brick_blue, 1, 0.5f, 1.0f, StackNum));
+		bricks.add(new Brick(c, R.drawable.brick_blue, 1, 0.5f, 1.0f, 0));
 		yOffset=0;
 		yScroll = 0;
         sView=view;
         context=c;
 	}
 	
-	//Gets and increases stack num
-	public int GetStackNum(){
-		return ++StackNum;
-	}
+
     
 	public void Reset(){
-		StackNum = 0;
 		unstable = false;
 	}
 	public void draw(Canvas canvas) {
@@ -227,7 +222,9 @@ public class Stack {
 		float [] locations = new float[bricks.size() * 2];
  		int [] ids = new int[bricks.size()];
  		int [] info = new int[bricks.size() * 2];
- 		
+ 		float [] offset = new float[2];
+ 		offset[0] = yOffset;
+ 		offset[1] = yScroll;
 		for(int i=0;  i<bricks.size(); i++) {
 			Brick brick = bricks.get(i);
 			locations[i*2] = brick.getX();
@@ -240,12 +237,14 @@ public class Stack {
 		bundle.putFloatArray(LOCATIONS, locations);
 		bundle.putIntArray(IDS,  ids);
 		bundle.putIntArray(INFO, info);
+		bundle.putFloatArray(OFFSET, offset);
 	}
 	
 	public void loadInstanceState(Bundle bundle) {
 		float [] locations = bundle.getFloatArray(LOCATIONS);
 		int [] ids = bundle.getIntArray(IDS);
 		int [] info = bundle.getIntArray(INFO);
+		float [] offset = bundle.getFloatArray(OFFSET);
         
 		bricks.clear();
 		for(int i=0; i<ids.length; i++) {
@@ -253,6 +252,8 @@ public class Stack {
 			bricks.get(i).setStatus(false);
 		}
 		bricks.get(bricks.size()-1).setStatus(true);
+		yOffset = offset[0];
+		yScroll = offset[1];
 	}
 	
 	
