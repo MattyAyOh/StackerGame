@@ -30,9 +30,8 @@ public class GameActivity extends Activity {
 		setContentView(R.layout.activity_game);
 		stackView = (StackView)this.findViewById(R.id.stackView);
     	loadNames();
-		if(bundle != null) {
-			// We have saved state
-//			stackView.loadInstanceState(bundle);
+		if(bundle != null) {;
+			stackView.loadInstanceState(bundle);
 		}
 
 	}
@@ -43,6 +42,7 @@ public class GameActivity extends Activity {
     	PlayerTwoName = preferences.getString("PlayerTwo","");
     	PlayerOneScore = preferences.getInt("PlayerOneScore", 0);
     	PlayerTwoScore = preferences.getInt("PlayerTwoScore", 0);
+    	PlayerTwoTurn = preferences.getBoolean("PlayerTwoTurn", false);
     	  
     	TextView playerTurn = (TextView) findViewById(R.id.playerTurn);
     	TextView scoreBoard = (TextView) findViewById(R.id.scoreBoard);
@@ -65,7 +65,9 @@ public class GameActivity extends Activity {
     	Stack stack = stackView.getStack();
     	int weight = Integer.parseInt((String)view.getTag()); 
     	stack.bricks.get(stack.bricks.size()-1).setMass(weight);
-    	
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences.Editor editor = preferences.edit();
+		
     	stack.physicsCheck(); 
     	if (stack.isUnstable()) 
     	{
@@ -73,11 +75,10 @@ public class GameActivity extends Activity {
     			PlayerOneScore++;
     		else
     			PlayerTwoScore++;
-    		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-    		SharedPreferences.Editor editor = preferences.edit();
+
     		editor.putInt("PlayerOneScore", PlayerOneScore);
     		editor.putInt("PlayerTwoScore", PlayerTwoScore);
-    		editor.commit();
+
     		
     		if(PlayerOneScore == 5 || PlayerTwoScore == 5) {
     			Intent intent = new Intent(this, ScoreActivity.class);
@@ -93,15 +94,20 @@ public class GameActivity extends Activity {
 	    		stack.bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 1.0f + stack.getYScroll(), 0));
 	    	else
 	    		stack.bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 1.0f + stack.getYScroll(), 0));
+			
+    		editor.putBoolean("PlayerTwoTurn", PlayerTwoTurn);
+    		editor.commit();
     	}
     	else
     	{
-        	
+        	int lastNum = stack.bricks.get(stack.bricks.size()-1).getNum() + 1;
         	if(PlayerTwoTurn)
-        		stack.bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 1.0f + stack.getYScroll(), stack.GetStackNum()));
+        		stack.bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 1.0f + stack.getYScroll(), lastNum));
         	else
-        		stack.bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 1.0f + stack.getYScroll(), stack.GetStackNum()));
+        		stack.bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 1.0f + stack.getYScroll(), lastNum));
         	PlayerTwoTurn = !PlayerTwoTurn;
+    		editor.putBoolean("PlayerTwoTurn", PlayerTwoTurn);
+    		editor.commit();
     	}
     	
     	stackView.invalidate();

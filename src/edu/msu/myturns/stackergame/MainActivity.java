@@ -36,6 +36,7 @@ public class MainActivity extends Activity {
 		editor.putString("PlayerTwo",twoName);
 		editor.putInt("PlayerOneScore", 0);
 		editor.putInt("PlayerTwoScore", 0);
+		editor.putBoolean("PlayerTwoTurn", false);
 		editor.commit();
 		
 		

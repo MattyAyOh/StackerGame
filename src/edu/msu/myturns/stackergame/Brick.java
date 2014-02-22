@@ -30,6 +30,10 @@ public class Brick {
 		this.active = false;
 	}
 	
+	public void setStatus(boolean s){
+		this.active = s;
+	}
+
 	public float getHeight() {
 		return brickImage.getHeight();
 	}

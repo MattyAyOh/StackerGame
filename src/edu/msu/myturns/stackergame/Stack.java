@@ -3,7 +3,6 @@ package edu.msu.myturns.stackergame;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -18,6 +17,7 @@ public class Stack {
 	private final static String LOCATIONS = "Stack.locations";
 	private final static String IDS = "Stack.ids";
 	private final static String INFO = "Stack.info";	
+
 	private int StackNum;
 	public ArrayList<Brick> bricks = new ArrayList<Brick>();
 	
@@ -41,6 +41,7 @@ public class Stack {
     private int lastStable;
     private int fallDirection;
     
+    private Context context;
 
     public boolean isUnstable(){
     	return unstable;
@@ -53,17 +54,18 @@ public class Stack {
     public float getYScroll(){
     	return yScroll;
     }
-	public Stack(View view, Context context) {
+	public Stack(View view, Context c) {
 //		fillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 //		fillPaint.setColor(0xffcccccc);
 //		outlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 //		outlinePaint.setColor(0xff008000);
 //		outlinePaint.setStyle(Paint.Style.STROKE);
 		StackNum = 0;
-		bricks.add(new Brick(context, R.drawable.brick_blue, 1, 0.5f, 1.0f, StackNum));
+		bricks.add(new Brick(c, R.drawable.brick_blue, 1, 0.5f, 1.0f, StackNum));
 		yOffset=0;
 		yScroll = 0;
         sView=view;
+        context=c;
 	}
 	
 	//Gets and increases stack num
@@ -80,9 +82,9 @@ public class Stack {
 		int hit = canvas.getHeight();
 		
 		// Determine the minimum of the two dimensions
-//		int minDim = wid < hit ? wid : hit;
+		int maxDim = wid < hit ? hit : wid;
 		
-		stackSize = (int)(hit * SCALE_IN_VIEW);
+		stackSize = (int)(maxDim * SCALE_IN_VIEW);
 		
 		// Compute the margins so we center the puzzle
 		marginX = (wid - stackSize) / 2;
@@ -135,7 +137,10 @@ public class Stack {
         switch (event.getActionMasked()) {
         
         case MotionEvent.ACTION_DOWN:
-        	return onTouched(relX, relY);
+        	onTouched(relX, relY);
+        	lastRelX = relX;
+        	lastRelY = relY;
+        	return true;
 				
         case MotionEvent.ACTION_UP:
         	return onReleased(view, relX, relY);
@@ -227,9 +232,9 @@ public class Stack {
 			Brick brick = bricks.get(i);
 			locations[i*2] = brick.getX();
 			locations[i*2+1] = brick.getY();
-			ids[i*3] = brick.getId();
-			ids[i*3+1] = brick.getNum();
-			ids[i*3+2] = brick.getMass();
+			ids[i] = brick.getId();
+			info[i*2] = brick.getNum();
+			info[i*2+1] = brick.getMass();
 		}
 		
 		bundle.putFloatArray(LOCATIONS, locations);
@@ -243,14 +248,11 @@ public class Stack {
 		int [] info = bundle.getIntArray(INFO);
         
 		bricks.clear();
-		for(int i=0; i<ids.length-1; i++) {
-//			bricks.add(new Brick(context, ));
+		for(int i=0; i<ids.length; i++) {
+			bricks.add(new Brick(context, ids[i], info[i*2+1], locations[i*2], locations[i*2+1], info[i*2] ));
+			bricks.get(i).setStatus(false);
 		}
-		for(int i=0;  i<bricks.size(); i++) {
-			Brick brick = bricks.get(i);
-			brick.setX(locations[i*2]);
-			brick.setY(locations[i*2+1]);
-		}
+		bricks.get(bricks.size()-1).setStatus(true);
 	}
 	
 	
