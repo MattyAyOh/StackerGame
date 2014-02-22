@@ -77,9 +77,9 @@ public class Stack {
 		int hit = canvas.getHeight();
 		
 		// Determine the minimum of the two dimensions
-		int maxDim = wid < hit ? hit : wid;
+//		int maxDim = wid < hit ? hit : wid;
 		
-		stackSize = (int)(maxDim * SCALE_IN_VIEW);
+		stackSize = (int)(hit * SCALE_IN_VIEW);
 		
 		// Compute the margins so we center the puzzle
 		marginX = (wid - stackSize) / 2;
@@ -116,6 +116,7 @@ public class Stack {
 			}
 			if (animationStep < 50)
 				sView.invalidate();
+
 		}
 		else
 			for(Brick brick : bricks) {
@@ -154,14 +155,19 @@ public class Stack {
                 return true;
             }
             else{
-            	yScroll += relY - lastRelY;
+            	
+        		yScroll += relY - lastRelY;
+
             	for(Brick brick : bricks){
-            	brick.scroll(relY - lastRelY);
+            		brick.scroll(relY - lastRelY);
             	}
+            	
             	lastRelY = relY;
             	view.invalidate();
             	return true;
-            }
+        	}
+            	
+            
             
         }
         return false;

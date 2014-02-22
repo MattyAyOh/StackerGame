@@ -86,8 +86,9 @@ public class GameActivity extends Activity {
     			stack.bricks.clear();    
     			
     		}
-    		stack.bricks.clear(); 
-    		stack.Reset();
+
+//    		stack.bricks.clear(); 
+//    		stack.Reset();
     		
     		PlayerTwoTurn = !PlayerTwoTurn;
 			if(PlayerTwoTurn)
@@ -97,6 +98,10 @@ public class GameActivity extends Activity {
 			
     		editor.putBoolean("PlayerTwoTurn", PlayerTwoTurn);
     		editor.commit();
+    		stackView.invalidate();
+    		Intent intent = new Intent(this, GameActivity.class);
+    		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    		startActivity(intent);
     	}
     	else
     	{
