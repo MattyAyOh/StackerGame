@@ -60,7 +60,7 @@ public class Stack {
 //		outlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 //		outlinePaint.setColor(0xff008000);
 //		outlinePaint.setStyle(Paint.Style.STROKE);
-		bricks.add(new Brick(c, R.drawable.brick_blue, 1, 0.5f, 1.0f, 0));
+
 		yOffset=0;
 		yScroll = 0;
         sView=view;

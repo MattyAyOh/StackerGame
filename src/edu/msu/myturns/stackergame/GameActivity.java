@@ -29,7 +29,13 @@ public class GameActivity extends Activity {
 		setTitle(R.string.game);
 		setContentView(R.layout.activity_game);
 		stackView = (StackView)this.findViewById(R.id.stackView);
+		
     	loadNames();
+		
+		if(PlayerTwoTurn)
+			stackView.getStack().bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 1.0f, 0));
+		else
+			stackView.getStack().bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 1.0f, 0));
 		if(bundle != null) {;
 			stackView.loadInstanceState(bundle);
 		}
@@ -43,6 +49,7 @@ public class GameActivity extends Activity {
     	PlayerOneScore = preferences.getInt("PlayerOneScore", 0);
     	PlayerTwoScore = preferences.getInt("PlayerTwoScore", 0);
     	PlayerTwoTurn = preferences.getBoolean("PlayerTwoTurn", false);
+
     	  
     	TextView playerTurn = (TextView) findViewById(R.id.playerTurn);
     	TextView scoreBoard = (TextView) findViewById(R.id.scoreBoard);
@@ -83,7 +90,11 @@ public class GameActivity extends Activity {
     		if(PlayerOneScore == 5 || PlayerTwoScore == 5) {
     			Intent intent = new Intent(this, ScoreActivity.class);
     			startActivity(intent);
-    			stack.bricks.clear();    
+    			stack.bricks.clear();
+        		editor.putInt("PlayerOneScore", PlayerOneScore);
+        		editor.putInt("PlayerTwoScore", PlayerTwoScore);
+        		editor.commit();
+    			return;
     			
     		}
 
