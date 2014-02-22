@@ -2,13 +2,9 @@ package edu.msu.myturns.stackergame;
 
 import java.util.ArrayList;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,9 +15,10 @@ public class Stack {
 	private float yOffset;
 	private float yScroll;
 	
+	private final static String LOCATIONS = "Stack.locations";
+	private final static String IDS = "Stack.ids";
+	private final static String INFO = "Stack.info";	
 	private int StackNum;
-	
-	
 	public ArrayList<Brick> bricks = new ArrayList<Brick>();
 	
     private int stackSize;
@@ -40,7 +37,6 @@ public class Stack {
     
     private View sView;
     
-    private boolean done;
     private boolean unstable = false;
     private int lastStable;
     private int fallDirection;
@@ -75,6 +71,10 @@ public class Stack {
 		return ++StackNum;
 	}
     
+	public void Reset(){
+		StackNum = 0;
+		unstable = false;
+	}
 	public void draw(Canvas canvas) {
 		int wid = canvas.getWidth();
 		int hit = canvas.getHeight();
@@ -135,10 +135,7 @@ public class Stack {
         switch (event.getActionMasked()) {
         
         case MotionEvent.ACTION_DOWN:
-        	onTouched(relX, relY);
-        	lastRelX = relX;
-        	lastRelY = relY;
-        	return true;
+        	return onTouched(relX, relY);
 				
         case MotionEvent.ACTION_UP:
         	return onReleased(view, relX, relY);
@@ -153,7 +150,6 @@ public class Stack {
             if(dragging != null) {
                 dragging.move(relX - lastRelX);
                 lastRelX = relX;
-                done = false;
                 view.invalidate();
                 return true;
             }
@@ -214,49 +210,48 @@ public class Stack {
     	}
     }
 
-
 //
-//	public void saveInstanceState(Bundle bundle) {
-//		float [] locations = new float[pieces.size() * 2];
-// 		int [] ids = new int[pieces.size()];
-// 		
-//		for(int i=0;  i<pieces.size(); i++) {
-//			PuzzlePiece piece = pieces.get(i);
-//			locations[i*2] = piece.getX();
-//			locations[i*2+1] = piece.getY();
-//			ids[i] = piece.getId();
-//		}
-//		
-//		bundle.putFloatArray(LOCATIONS, locations);
-//		bundle.putIntArray(IDS,  ids);
-//	}
-//	
-//	public void loadInstanceState(Bundle bundle) {
-//		float [] locations = bundle.getFloatArray(LOCATIONS);
-//		int [] ids = bundle.getIntArray(IDS);
-//        
-//		for(int i=0; i<ids.length-1; i++) {
-//			
-//			// Find the corresponding piece
-//			// We don't have to test if the piece is at i already,
-//			// since the loop below will fall out without it moving anything
-//			for(int j=i+1;  j<ids.length;  j++) {
-//				if(ids[i] == pieces.get(j).getId()) {
-//					// We found it
-//					// Yah...
-//					// Swap the pieces
-//					PuzzlePiece t = pieces.get(i);
-//					pieces.set(i, pieces.get(j));
-//					pieces.set(j, t);
-//				}
-//			}
-//		}
-//		for(int i=0;  i<pieces.size(); i++) {
-//			PuzzlePiece piece = pieces.get(i);
-//			piece.setX(locations[i*2]);
-//			piece.setY(locations[i*2+1]);
-//		}
-//	}
+//	this.x = x;
+//	this.y = y;
+//	this.mass = m;
+//	this.active = true;
+//	this.num = n;
+//	brickImage = BitmapFactory.decodeResource(context.getResources(), id);
+    
+	public void saveInstanceState(Bundle bundle) {
+		float [] locations = new float[bricks.size() * 2];
+ 		int [] ids = new int[bricks.size()];
+ 		int [] info = new int[bricks.size() * 2];
+ 		
+		for(int i=0;  i<bricks.size(); i++) {
+			Brick brick = bricks.get(i);
+			locations[i*2] = brick.getX();
+			locations[i*2+1] = brick.getY();
+			ids[i*3] = brick.getId();
+			ids[i*3+1] = brick.getNum();
+			ids[i*3+2] = brick.getMass();
+		}
+		
+		bundle.putFloatArray(LOCATIONS, locations);
+		bundle.putIntArray(IDS,  ids);
+		bundle.putIntArray(INFO, info);
+	}
+	
+	public void loadInstanceState(Bundle bundle) {
+		float [] locations = bundle.getFloatArray(LOCATIONS);
+		int [] ids = bundle.getIntArray(IDS);
+		int [] info = bundle.getIntArray(INFO);
+        
+		bricks.clear();
+		for(int i=0; i<ids.length-1; i++) {
+//			bricks.add(new Brick(context, ));
+		}
+		for(int i=0;  i<bricks.size(); i++) {
+			Brick brick = bricks.get(i);
+			brick.setX(locations[i*2]);
+			brick.setY(locations[i*2+1]);
+		}
+	}
 	
 	
 }

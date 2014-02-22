@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,15 +25,17 @@ public class MainActivity extends Activity {
     	EditText playerTwo = (EditText)findViewById(R.id.editText2);
     	String twoName = playerTwo.getText().toString();
     	
-//    	String keyOne = "edu.msu.myturns.stackergame.pOne";
-//    	String keyTwo = "edu.msu.myturns.stackergame.pTwo";
-//    	prefs.edit().putString(keyOne, oneName);
-//    	prefs.edit().putString(keyTwo, twoName);
+    	if(oneName.matches(""))
+    		oneName = "Player 1";
+    	if(twoName.matches(""))
+    		twoName = "Player 2";
     	
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		SharedPreferences.Editor editor = preferences.edit();
 		editor.putString("PlayerOne",oneName);
 		editor.putString("PlayerTwo",twoName);
+		editor.putInt("PlayerOneScore", 0);
+		editor.putInt("PlayerTwoScore", 0);
 		editor.commit();
 		
 		
@@ -54,12 +55,8 @@ public class MainActivity extends Activity {
         		+ "The first player to win 5 rounds wins the game.  Good luck!");
 
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //Your action here
-            }
+            public void onClick(DialogInterface dialog, int whichButton) {}
         });
-
-
         alert.show();
     }
 

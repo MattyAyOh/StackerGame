@@ -45,12 +45,12 @@ public class StackView extends View {
 		stack.draw(canvas);
 	}
 
-//	public void saveInstanceState(Bundle bundle) {
-//		stack.saveInstanceState(bundle);
-//	}
-//	
-//	public void loadInstanceState(Bundle bundle) {
-//		stack.loadInstanceState(bundle);
-//	}
+	public void saveInstanceState(Bundle bundle) {
+		stack.saveInstanceState(bundle);
+	}
+	
+	public void loadInstanceState(Bundle bundle) {
+		stack.loadInstanceState(bundle);
+	}
 
 }
