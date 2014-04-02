@@ -31,11 +31,11 @@ public class GameActivity extends Activity {
 		stackView = (StackView)this.findViewById(R.id.stackView);
 		
     	loadNames();
-		
+		stackView.getStack().bricks.clear();
 		if(PlayerTwoTurn)
-			stackView.getStack().bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 1.0f, 0));
+			stackView.getStack().bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 0.7f, 0));
 		else
-			stackView.getStack().bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 1.0f, 0));
+			stackView.getStack().bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 0.7f, 0));
 		if(bundle != null) {;
 			stackView.loadInstanceState(bundle);
 		}
@@ -103,9 +103,9 @@ public class GameActivity extends Activity {
     		
     		PlayerTwoTurn = !PlayerTwoTurn;
 			if(PlayerTwoTurn)
-	    		stack.bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 1.0f + stack.getYScroll(), 0));
+	    		stack.bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 0.7f + stack.getYScroll(), 0));
 	    	else
-	    		stack.bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 1.0f + stack.getYScroll(), 0));
+	    		stack.bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 0.7f + stack.getYScroll(), 0));
 			
     		editor.putBoolean("PlayerTwoTurn", PlayerTwoTurn);
     		editor.commit();
@@ -118,9 +118,9 @@ public class GameActivity extends Activity {
     	{
         	int lastNum = stack.bricks.get(stack.bricks.size()-1).getNum() + 1;
         	if(PlayerTwoTurn)
-        		stack.bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 1.0f + stack.getYScroll(), lastNum));
+        		stack.bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 0.7f + stack.getYScroll(), lastNum));
         	else
-        		stack.bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 1.0f + stack.getYScroll(), lastNum));
+        		stack.bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 0.7f + stack.getYScroll(), lastNum));
         	PlayerTwoTurn = !PlayerTwoTurn;
     		editor.putBoolean("PlayerTwoTurn", PlayerTwoTurn);
     		editor.commit();

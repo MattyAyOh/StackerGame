@@ -60,7 +60,14 @@ public class Stack {
 //		outlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 //		outlinePaint.setColor(0xff008000);
 //		outlinePaint.setStyle(Paint.Style.STROKE);
-
+		bricks.add(new Brick(c, R.drawable.brick_blue, 1, 0.5f, 0.7f, 0));
+		bricks.add(new Brick(c, R.drawable.brick_red1, 1, 0.5f, 0.7f, 1));
+		bricks.add(new Brick(c, R.drawable.brick_blue, 1, 0.5f, 0.7f, 2));
+		bricks.add(new Brick(c, R.drawable.brick_red1, 1, 0.5f, 0.7f, 3));
+		bricks.add(new Brick(c, R.drawable.brick_blue, 1, 0.5f, 0.7f, 4));
+		bricks.add(new Brick(c, R.drawable.brick_red1, 1, 0.5f, 0.7f, 5));
+		bricks.add(new Brick(c, R.drawable.brick_blue, 1, 0.5f, 0.7f, 6));
+		bricks.add(new Brick(c, R.drawable.brick_red1, 1, 0.5f, 0.7f, 7));
 		yOffset=0;
 		yScroll = 0;
         sView=view;
@@ -77,9 +84,9 @@ public class Stack {
 		int hit = canvas.getHeight();
 		
 		// Determine the minimum of the two dimensions
-//		int maxDim = wid < hit ? hit : wid;
+		int maxDim = wid < hit ? hit : wid;
 		
-		stackSize = (int)(hit * SCALE_IN_VIEW);
+		stackSize = (int)(maxDim * SCALE_IN_VIEW);
 		
 		// Compute the margins so we center the puzzle
 		marginX = (wid - stackSize) / 2;
