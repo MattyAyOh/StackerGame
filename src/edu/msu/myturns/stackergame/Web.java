@@ -82,7 +82,7 @@ public class Web {
 			}
 		}
 
-		return true;
+		//return true;//this is never reached?
 	}
 
 	public boolean login(String username, String password){
@@ -151,6 +151,6 @@ public class Web {
 			}
 		}
 
-		return true;
+		//return true;//this is never reached?
 	}
 }

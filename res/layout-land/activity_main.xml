@@ -1,118 +1,117 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <View
-        android:id="@+id/anchor"
+    <ImageView
+        android:id="@+id/stackerImage"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true" />
-    
+        android:layout_weight="3"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/stacker_description"
+        android:src="@drawable/stacker" />
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_toLeftOf="@id/anchor"
+        android:layout_gravity="center"
+        android:layout_weight="6"
         android:gravity="center"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:id="@+id/stackerImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:contentDescription="@string/stacker_description"
-            android:padding="10dp"
-            android:src="@drawable/stacker" />
-
-    </LinearLayout>
-        
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_toRightOf="@id/anchor"
         android:orientation="vertical" >
 
         <TableRow
             android:id="@+id/tableRow1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="bottom|center_horizontal" >
-	
-	        <TextView
-	            android:id="@+id/textView1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/pOne" />
-	
-	        <EditText
-	            android:id="@+id/editText1"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:ems="10"
-	            android:inputType="text" >
-	
-	            <requestFocus />
-	        </EditText>
-	
-	    </TableRow>
-	
-	    <TableRow
-	        android:id="@+id/tableRow2"
-	        android:layout_width="match_parent"
-	        android:layout_height="0dp"
-	        android:layout_marginTop="20dp"
-	        android:layout_weight="1"
-	        android:gravity="center_horizontal" >
-	
-	        <TextView
-	            android:id="@+id/textView2"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/pTwo" />
-	
-	        <EditText
-	            android:id="@+id/editText2"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:ems="10"
-	            android:inputType="text" />
-	
-	    </TableRow>
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_name" />
+
+            <EditText
+                android:id="@+id/editText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text" >
+
+                <requestFocus />
+            </EditText>
+        </TableRow>
 
         <TableRow
-            android:id="@+id/tableRow3"
+            android:id="@+id/tableRow2"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal" >
-	        
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/password" />
+
+            <EditText
+                android:id="@+id/editText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPassword" />
+        </TableRow>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
             <Button
                 android:id="@+id/startButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="15dp"
-                android:onClick="onStartGame"
-                android:paddingLeft="40dp"
-                android:paddingRight="40dp"
-                android:text="@string/start" />
+                android:onClick="onLogin"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/login" />
 
             <Button
                 android:id="@+id/tutorialButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_toRightOf="@id/startButton"
                 android:onClick="onHowTo"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:text="@string/tutorial" />
 
-        </TableRow>
-        
-    </LinearLayout>
-        
+            <Button
+                android:id="@+id/NewButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tutorialButton"
+                android:layout_alignBottom="@+id/tutorialButton"
+                android:layout_toRightOf="@+id/tutorialButton"
+                android:onClick="onNewUser"
+                android:text="@string/create_account" />
+        </RelativeLayout>
 
-</RelativeLayout>
+        <CheckBox
+            android:id="@+id/checkBoxRemember"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/remember_me" />
+
+    </LinearLayout>
+
+</LinearLayout>

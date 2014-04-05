@@ -30,18 +30,14 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pOne" />
+            android:text="@string/user_name" />
 
         <EditText
             android:id="@+id/editText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text" >
-
-            <requestFocus />
-        </EditText>
-
+            android:inputType="text" />
     </TableRow>
 
     <TableRow
@@ -54,43 +50,57 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pTwo" />
+            android:text="@string/password" />
 
         <EditText
             android:id="@+id/editText2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text" />
-
+            android:inputType="textPassword" />
     </TableRow>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="0.45"
         android:gravity="center" >
 
         <Button
             android:id="@+id/startButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
-            android:onClick="onStartGame"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            android:text="@string/start" />
+            android:onClick="onLogin"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:text="@string/login" />
 
         <Button
             android:id="@+id/tutorialButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/startButton"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
             android:onClick="onHowTo"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:text="@string/tutorial" />
 
+        <Button
+            android:id="@+id/NewButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tutorialButton"
+            android:layout_alignBottom="@+id/tutorialButton"
+            android:layout_toRightOf="@+id/tutorialButton"
+            android:onClick="onNewUser"
+            android:text="@string/create_account" />
+
     </RelativeLayout>
+
+    <CheckBox
+        android:id="@+id/checkBoxRemember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remember_me" />
 
 </LinearLayout>

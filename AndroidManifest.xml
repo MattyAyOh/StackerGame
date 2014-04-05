@@ -7,6 +7,8 @@
     <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="19" />
+    
+    <uses-permission android:name="android.permission.INTERNET" /> 
 
     <application
         android:allowBackup="true"
@@ -29,6 +31,14 @@
         <activity
             android:name="edu.msu.myturns.stackergame.ScoreActivity"
             android:label="@string/title_activity_score" >
+        </activity>
+        <activity
+            android:name="edu.msu.myturns.stackergame.WaitingActivity"
+            android:label="@string/title_activity_waiting" >
+        </activity>
+        <activity
+            android:name="edu.msu.myturns.stackergame.NewUserActivity"
+            android:label="@string/title_activity_new_user" >
         </activity>
     </application>
 
