@@ -22,11 +22,11 @@ public class Web {
 		public int number;
 		public float x;
 		public float y;
-		public float weight;
+		public int weight;
 		public String username;
 	}
 	
-	public boolean sendMove(String username, String password, int number, float x, float y, float weight){
+	public boolean sendMove(String username, String password, int number, float x, float y, int weight){
 		URL url;
 		InputStream stream = null;
 		try {
@@ -34,7 +34,7 @@ public class Web {
 					+ "&number=" + Integer.toString(number)
 					+ "&x=" + Float.toString(x)
 					+ "&y=" + Float.toString(y)
-					+ "&weight=" + Float.toString(weight));
+					+ "&weight=" + Integer.toString(weight));
 			HttpURLConnection conn;
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(true);
@@ -97,12 +97,13 @@ public class Web {
 					move.number = Integer.parseInt(xml.getAttributeValue(null, "number"));
 					move.x = Float.parseFloat(xml.getAttributeValue(null, "x"));
 					move.y = Float.parseFloat(xml.getAttributeValue(null, "y"));
-					move.weight = Float.parseFloat(xml.getAttributeValue(null, "weight"));
+					move.weight = Integer.parseInt(xml.getAttributeValue(null, "weight"));
 					move.username = xml.getAttributeValue(null, "username");				
 					game.add(move);
 				}
 				skipToEndTag(xml);
-			}			
+			}		
+			return game;
 		} catch (Exception e){
 			return null;
 		} finally {
@@ -112,7 +113,7 @@ public class Web {
 				return null;
 			}
 		}
-		return null;
+		//return null;
 	}
 	
 	public boolean newGame(String username, String password){

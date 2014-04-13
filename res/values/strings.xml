@@ -31,6 +31,7 @@
     <string name="title_activity_new_user">Create a New User</string>
     <string name="pass_var">Password Verify:</string>
     <string name="create">Create!</string>
+    <string name="exitMenu">Exit the game</string>
     <string name="create_fail">Create User Fail</string>
     <string name="login_fail">Login Fail</string>
     <string name="contact_server">Contacting Server!</string>
