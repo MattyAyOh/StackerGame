@@ -16,34 +16,36 @@ function processXml($user, $password, $numba, $ex, $why, $wait) {
         exit;
     }
 
-    $playaone = 0;
-    $playatwo = 0;
-    $onename = "";
-    $twoname = "";
-    $playaquery = "SELECT playeroneId, playertwoId FROM game_details";
-    $rows = $pdo->query($playaquery);
-    if($row = $rows->fetch()) {
-        $playaone = $row['playeroneId'];
-        $playatwo = $row['playertwoId'];
-    }
+    //The commented code below determines the players, but we changed the design so that it doesn't care who the players are.
 
-    $playernamequery = "SELECT username FROM users WHERE uid=$playaone";
-    $rows = $pdo->query($playernamequery);
-    if($row = $rows->fetch()) {
-        $onename = $row['username'];
-    }
-    $playernamequery = "SELECT username FROM users WHERE uid=$playatwo";
-    $rows = $pdo->query($playernamequery);
-    if($row = $rows->fetch()) {
-        $twoname = $row['username'];
-    }
+    // $playaone = 0;
+    // $playatwo = 0;
+    // $onename = "";
+    // $twoname = "";
+    // $playaquery = "SELECT playeroneId, playertwoId FROM game_details";
+    // $rows = $pdo->query($playaquery);
+    // if($row = $rows->fetch()) {
+    //     $playaone = $row['playeroneId'];
+    //     $playatwo = $row['playertwoId'];
+    // }
+
+    // $playernamequery = "SELECT username FROM users WHERE uid=$playaone";
+    // $rows = $pdo->query($playernamequery);
+    // if($row = $rows->fetch()) {
+    //     $onename = $row['username'];
+    // }
+    // $playernamequery = "SELECT username FROM users WHERE uid=$playatwo";
+    // $rows = $pdo->query($playernamequery);
+    // if($row = $rows->fetch()) {
+    //     $twoname = $row['username'];
+    // }
     $id = 0;
-    if($user == $onename) {
-        $id = 0x7f020002;
-    }
-    else {
-        $id = 0x7f020006;
-    }
+    // if($user == $onename) {
+    //     $id = 0x7f020002;
+    // }
+    // else {
+    //     $id = 0x7f020006;
+    // }
     $query = "INSERT into moves values ($numba, $ex, $why, $id, $wait, \"$user\")";
     $pdo->query($query);
     echo "<move status=yes />";
