@@ -45,6 +45,7 @@ public final class R {
         public static final int editText1=0x7f08000a;
         public static final int editText2=0x7f08000d;
         public static final int editText3=0x7f080015;
+        public static final int menu_exit=0x7f080019;
         public static final int playerTurn=0x7f080001;
         public static final int scoreBoard=0x7f080000;
         public static final int stackView=0x7f080002;
@@ -78,16 +79,17 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f050001;
         public static final int app_name=0x7f050000;
-        public static final int contact_server=0x7f050020;
+        public static final int contact_server=0x7f050021;
         public static final int create=0x7f05001d;
         public static final int create_account=0x7f050018;
-        public static final int create_fail=0x7f05001e;
+        public static final int create_fail=0x7f05001f;
+        public static final int exitMenu=0x7f05001e;
         public static final int finalScore=0x7f050010;
         public static final int fivekg=0x7f05000a;
         public static final int game=0x7f05000d;
         public static final int hello_world=0x7f050002;
         public static final int login=0x7f050017;
-        public static final int login_fail=0x7f05001f;
+        public static final int login_fail=0x7f050020;
         public static final int mainMenu=0x7f05000c;
         public static final int onekg=0x7f050008;
         public static final int pOne=0x7f050011;
