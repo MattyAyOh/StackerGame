@@ -3,7 +3,7 @@ package edu.msu.myturns.stackergame;
 
 import java.util.ArrayList;
 
-import android.R.drawable;
+
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -32,16 +32,11 @@ public class GameActivity extends Activity {
 	private float bricky;
 	private int brickweight;
 	private boolean newgame;
+	private int brickcount;
 	
-	private ArrayList<Move> received;
+	private ArrayList<Web.Move> received;
 	
-	public class Move{
-		public int number;
-		public float x;
-		public float y;
-		public int weight;
-		public String username;
-	}
+
 	
 	@Override
 	protected void onSaveInstanceState(Bundle bundle) {
@@ -55,48 +50,43 @@ public class GameActivity extends Activity {
 		setTitle(R.string.game);
 		setContentView(R.layout.activity_game);
 		stackView = (StackView)this.findViewById(R.id.stackView);
-		
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+    	uname = pref.getString("CUsername", "");
+    	upass = pref.getString("CPassword", "");
+    	brickcount = 0;
 		//receive game or create new one if needed
 		//uncomment me to get game!
-//		new Thread(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                // Create a cloud object and get the XML
-//                Web cloud = new Web();
-//                receive = cloud.getGame(user, pass);
-//               stackView.post(new Runnable(){
-//                	@Override
-//                	public void run()
-//                	{
-//                		if(receive == null)
-//                		{
-//                			String error = "No Game for this user!";
-//            	    		Toast.makeText(stackView.getContext(), error, Toast.LENGTH_SHORT).show();
-//							createGame();
-//                		}
-//                		else
-//                		{
-//                			LoadGame();
-//                		}
-//                	}
-//                });
-//            }
-//    	}).start();
+		new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                // Create a cloud object and get the XML
+                Web cloud = new Web();
+                received = cloud.getGame(uname, upass);
+                stackView.post(new Runnable(){
+                	@Override
+                	public void run()
+                	{
+                		if(received.isEmpty())
+                		{
+                			String error = "No Game for this user!";
+            	    		Toast.makeText(stackView.getContext(), error, Toast.LENGTH_SHORT).show();
+							//createGame();
+                		}
+                		else
+                		{
+                			loadGame();
+                		}
+                	}
+                });
+            }
+    	}).start();
 		
     	loadNames();
     	
-    	SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-    	uname = pref.getString("CUsername", "");
-    	upass = pref.getString("CPassword", "");
-    	
-		stackView.getStack().bricks.clear();
+		//stackView.getStack().bricks.clear();
+		stackView.getStack().bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 0.7f, brickcount));
 		
-		//this is here so there are no errors? comment me later!
-		if(PlayerTwoTurn)
-			stackView.getStack().bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 0.7f, 0));
-		else
-			stackView.getStack().bricks.add(new Brick(this, R.drawable.brick_blue, 1, 0.5f, 0.7f, 0));
 		if(bundle != null) {;
 			stackView.loadInstanceState(bundle);
 		}
@@ -105,20 +95,28 @@ public class GameActivity extends Activity {
 	
 	public void loadGame()
 	{
+		brickcount = 0;
 		stackView.getStack().bricks.clear();
-		for(Move moves: received)
+		for(Web.Move moves: received)
 		{
+			
+			//load the bricks from server. THe player holding the device's bricks are blue and opponent's bricks are red
 			boolean red = true;
+			brickcount++;
 			if(moves.username == uname)
 			{
 				 red = false;
 			}
 			if(red)
 			{
-				stackView.getStack().bricks.add(new Brick(this, R.drawable.brick_red1,moves.weight, moves.x,moves.y,moves.number ));
+				Brick brick = new Brick(this, R.drawable.brick_red1,moves.weight, moves.x,moves.y,moves.number );
+				brick.setStatus(false);
+				stackView.getStack().bricks.add(brick);
 			}else
 			{
-				stackView.getStack().bricks.add(new Brick(this, R.drawable.brick_blue,moves.weight, moves.x,moves.y,moves.number ));
+				Brick brick = new Brick(this, R.drawable.brick_blue,moves.weight, moves.x,moves.y,moves.number );
+				brick.setStatus(false);
+				stackView.getStack().bricks.add(brick);
 			}
 		}
 	}
@@ -132,7 +130,7 @@ public class GameActivity extends Activity {
                 // Create a cloud object and get the XML
                 Web cloud = new Web();
                 newgame = cloud.newGame(uname, upass);
-               stackView.post(new Runnable(){
+                stackView.post(new Runnable(){
                 	@Override
                 	public void run()
                 	{
@@ -223,6 +221,8 @@ public class GameActivity extends Activity {
 //    		stack.bricks.clear(); 
 //    		stack.Reset();
     		
+    		createGame();
+    		
     		PlayerTwoTurn = !PlayerTwoTurn;
 //			if(PlayerTwoTurn)
 //	    		stack.bricks.add(new Brick(this, R.drawable.brick_red1, 1, 0.5f, 0.7f + stack.getYScroll(), 0));
@@ -258,7 +258,7 @@ public class GameActivity extends Activity {
     	bricknum = stack.bricks.get(stack.bricks.size()-1).getNum();
     	
     	//Uncomment me to send move!
-    	//SendMove();
+    	SendMove();
 	}
     
     private void SendMove()
@@ -271,7 +271,6 @@ public class GameActivity extends Activity {
                 // Create a cloud object and get the XML
                 Web cloud = new Web();
                 move_sent = cloud.sendMove(uname, upass, bricknum, brickx, bricky, brickweight);
-                
                 stackView.post(new Runnable(){
                 	@Override
                 	public void run()
