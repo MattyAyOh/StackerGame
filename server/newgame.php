@@ -11,7 +11,15 @@ processXml($_GET['user'], $_GET['pw']);
 function processXml($user, $password) {
     $pdo = pdo_connect();
     $userid = getUser($pdo, $user, $password);
-    echo '<login status="yes" uid="' . $userid . '" />';
+    if( $userid == "fail") {
+        echo '<newgame status="no" msg="login error" />';
+        exit;
+    }
+
+    $query = "INSERT into game_details values(null,$userid, 0, 0, 0)";
+    $pdo->query($query);
+
+    echo '<newgame status="yes"/>';
     exit;
 }
 
@@ -32,15 +40,13 @@ function getUser($pdo, $user, $password) {
         // Check the password
         if($row['password'] != $password) {
             echo $password;
-            echo '<login status="no" msg="password error" />';
-            exit;
+            return "fail";
         }
 
         return $row['uid'];
     }
 
-    echo '<login status="no" msg="user error" />';
-    exit;
+    return "fail";
 }
 
 ?>
